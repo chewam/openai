@@ -2,10 +2,23 @@
 
 import React, { useContext } from "react"
 
+import Spinner from "./spinner"
 import { FormDataContext } from "@/app/test/form-data-context"
 
-export const Message: React.FC = () => {
-  const { formData } = useContext(FormDataContext)
+const LoadingMask = () => (
+  <div className="loading-mask">
+    <Spinner />
+  </div>
+)
 
-  return <pre>{JSON.stringify(formData, null, 2)}</pre>
+const Message = () => {
+  const { formData } = useContext(FormDataContext)
+  return (
+    <pre className="message">
+      {formData.loading && <LoadingMask />}
+      {formData.message}
+    </pre>
+  )
 }
+
+export default Message
