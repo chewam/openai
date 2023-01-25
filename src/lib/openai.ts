@@ -9,21 +9,17 @@ const openai = new OpenAIApi(configuration)
 export default async function useOpenAI(prompt: string) {
   try {
     const completion = await openai.createCompletion({
-      // prompt,
-      // top_p: 1,
-      // temperature: 0,
-      // max_tokens: 256,
-      // presence_penalty: 0,
-      // frequency_penalty: 0,
-      // model: "code-davinci-002",
-      model: "code-davinci-002",
-      prompt: "# Hello",
+      top_p: 1,
       temperature: 0,
-      max_tokens: 256,
+      max_tokens: 512,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+      model: "code-davinci-002",
+      prompt:
+        "# Create a Python dictionary of 6 countries and their capitals\ncountries = ",
     })
     return completion.data.choices[0].text
   } catch (error) {
-    console.log({ error })
-    return error
+    throw error
   }
 }

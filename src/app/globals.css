@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-gradient-to-br from-sky-400 to-pink-200;
+}
+
 main {
-  @apply container mx-auto flex flex-col gap-12 p-12 bg-stone-100;
+  @apply container mx-auto flex flex-col gap-12 p-12;
+
+  min-height: calc(100vh - 0rem);
+  max-height: calc(100vh - 0rem);
 }
 
 h1 {
@@ -11,27 +18,40 @@ h1 {
 }
 
 button, button[type="submit"] {
-  @apply rounded px-3 py-1 w-36 text-lg flex items-center justify-center relative
-    active:shadow
-    focus:shadow-lg
-    hover:shadow-lg
-    focus-visible:outline-none
-    bg-pink-500
-    text-stone-100
-    hover:bg-pink-600
-    active:bg-pink-400
+  @apply
+  px-3
+  py-1
+  w-36
+  flex
+  text-lg
+  rounded
+  relative
+  items-center
+  justify-center
+  active:shadow
+  focus:shadow-lg
+  hover:shadow-lg
+  focus-visible:outline-none
+  bg-pink-500
+  text-stone-100
+  hover:bg-pink-600
+  active:bg-pink-400
   ;
 }
 
 input {
-  @apply rounded px-2 py-1 font-normal
-    border-none
-    focus:ring-2
-    bg-stone-100
-    text-gray-800
-    focus:border-none
-    focus:outline-none
-    focus:ring-pink-500
+  @apply
+  px-2
+  py-1
+  rounded
+  border-none
+  font-normal
+  focus:ring-2
+  focus:border-none
+  focus:outline-none
+  bg-stone-100
+  text-gray-800
+  focus:ring-pink-500
   ;
 }
 
@@ -60,9 +80,18 @@ button .spinner, button[type="submit"] .spinner {
 }
 
 .loading-mask {
-  @apply flex justify-center items-center
-    absolute left-0 right-0 top-0 bottom-0
-    bg-pink-200 bg-transparent;
+  @apply
+  flex
+  top-0
+  left-0
+  right-0
+  bottom-0
+  absolute
+  items-center
+  bg-transparent
+  justify-center
+  bg-pink-200
+  ;
 }
 
 .loading-mask .spinner {
@@ -70,5 +99,15 @@ button .spinner, button[type="submit"] .spinner {
 }
 
 .message {
-  @apply rounded shadow-lg relative bg-slate-600 p-12 text-neutral-200;
+  @apply
+  p-12
+  flex-1
+  rounded
+  relative
+  shadow-lg
+  overflow-auto
+  whitespace-pre-wrap
+  bg-slate-800/80
+  text-neutral-200
+  ;
 }
