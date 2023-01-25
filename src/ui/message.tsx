@@ -3,7 +3,7 @@
 import React, { useContext } from "react"
 
 import Spinner from "./spinner"
-import { FormDataContext } from "@/app/test/form-data-context"
+import { FormDataContext } from "@/app/form-data-context"
 
 const LoadingMask = () => (
   <div className="loading-mask">

@@ -3,7 +3,7 @@
 import React, { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { FormDataContext } from "@/app/test/form-data-context"
+import { FormDataContext } from "@/app/form-data-context"
 import Spinner from "./spinner"
 
 type FormData = {

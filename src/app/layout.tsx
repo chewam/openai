@@ -1,18 +1,16 @@
-import './globals.css'
+import { Form } from "@/ui/form"
+import Message from "@/ui/message"
+import React from "react"
+import { FormDataContextProvider } from "./form-data-context"
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
-      <body>{children}</body>
-    </html>
-  )
-}
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <main>
+    {children}
+    <FormDataContextProvider>
+      <Form />
+      <Message />
+    </FormDataContextProvider>
+  </main>
+)
+
+export default Layout
