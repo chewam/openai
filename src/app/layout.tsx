@@ -1,16 +1,12 @@
-import { Form } from "@/ui/form"
-import Message from "@/ui/message"
+import "./globals.css"
+
 import React from "react"
-import { FormDataContextProvider } from "./form-data-context"
 
 const Layout = ({ children }: { children: React.ReactNode }) => (
-  <main>
-    {children}
-    <FormDataContextProvider>
-      <Form />
-      <Message />
-    </FormDataContextProvider>
-  </main>
+  <html lang="en">
+    <head />
+    <body>{children}</body>
+  </html>
 )
 
 export default Layout
