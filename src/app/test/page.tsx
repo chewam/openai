@@ -1,3 +1,3 @@
 export default function Page() {
-  return <main>test</main>
+  return <h1>Open AI - Test App</h1>
 }
