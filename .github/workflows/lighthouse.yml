@@ -1,0 +1,21 @@
+name: Lighthouse
+
+on: deployment_status
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event.deployment_status.id }}
+
+jobs:
+  lhci:
+    name: Run lhci on deployed environment
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: run lhci
+        run: npx --yes @lhci/cli@latest autorun --collect.url=${{ github.event.deployment_status.target_url }}
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
