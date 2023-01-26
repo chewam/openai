@@ -1,3 +1,5 @@
+"use client"
+
 const Spinner = ({ size = "" }: { size?: "sm" | "" }) => (
   <svg
     fill="none"

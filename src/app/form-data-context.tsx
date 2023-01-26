@@ -2,11 +2,19 @@
 
 import React, { createContext, useState } from "react"
 
-export const FormDataContext = createContext<{
-  formData: { loading: boolean; message: string }
-  setFormData: (formData: { loading: boolean; message: string }) => void
-}>({
-  formData: { loading: false, message: "" },
+type FormDataContext = {
+  formData: {
+    status?: "loading" | "error"
+    message?: string
+  }
+  setFormData: (formData: {
+    status?: "loading" | "error"
+    message?: string
+  }) => void
+}
+
+export const FormDataContext = createContext<FormDataContext>({
+  formData: {},
   setFormData: () => {},
 })
 
@@ -15,7 +23,7 @@ export const FormDataContextProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [formData, setFormData] = useState({ loading: false, message: "" })
+  const [formData, setFormData] = useState({})
 
   return (
     <FormDataContext.Provider value={{ formData, setFormData }}>

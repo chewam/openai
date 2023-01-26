@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    /* font-family: "Source Sans Pro", sans-serif; */
+  }
+}
+
 body {
-  @apply bg-gradient-to-br from-sky-400 to-pink-200;
+  @apply bg-gradient-to-br from-sky-400 to-pink-200 text-base;
 }
 
 main {
@@ -14,7 +20,7 @@ main {
 }
 
 h1 {
-  @apply text-4xl;
+  @apply text-sky-800 text-xl;
 }
 
 button, button[type="submit"] {
@@ -23,7 +29,6 @@ button, button[type="submit"] {
   py-1
   w-36
   flex
-  text-lg
   rounded
   relative
   items-center
@@ -45,7 +50,6 @@ input {
   py-1
   rounded
   border-none
-  font-normal
   focus:ring-2
   focus:border-none
   focus:outline-none
@@ -64,7 +68,7 @@ form {
 }
 
 label {
-  @apply flex flex-col flex-1 gap-1 text-pink-500 font-bold;
+  @apply flex flex-col flex-1 gap-1 text-pink-500;
 }
 
 .spinner {
@@ -90,7 +94,6 @@ button .spinner, button[type="submit"] .spinner {
   items-center
   bg-transparent
   justify-center
-  bg-pink-200
   ;
 }
 
@@ -105,9 +108,10 @@ button .spinner, button[type="submit"] .spinner {
   rounded
   relative
   shadow-lg
+  font-code
   overflow-auto
   whitespace-pre-wrap
-  bg-slate-800/80
+  bg-slate-800/70
   text-neutral-200
   ;
 }

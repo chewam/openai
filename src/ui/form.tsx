@@ -11,24 +11,37 @@ type FormData = {
   components: string
 }
 
-export const Form: React.FC = () => {
+const Form = () => {
   const { setFormData } = useContext(FormDataContext)
   const [loading, setLoading] = useState<boolean>(false)
   const { register, handleSubmit } = useForm<FormData>()
 
-  const onSubmit = (data: FormData) => {
-    setLoading(true)
-    setFormData({ loading: true, message: "" })
-    fetch("/api/openai", {
+  async function getOpenAIResponse(data: FormData) {
+    const response = await fetch("/api/openai", {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     })
-      .then((response) => response.json())
-      .then(({ result }) => {
-        setFormData({ loading: false, message: result })
-        setLoading(false)
-      })
+
+    if (response?.ok) {
+      return response.json()
+    } else {
+      throw response?.statusText
+    }
+  }
+
+  const onSubmit = async (data: FormData) => {
+    setLoading(true)
+    setFormData({ status: "loading" })
+    try {
+      const { result } = await getOpenAIResponse(data)
+      console.log("RESULT", result)
+      setFormData({ message: result })
+      setLoading(false)
+    } catch (error) {
+      console.log("WE GOT IT BRO!", error)
+      setFormData({ status: "error" })
+    }
   }
 
   return (
@@ -50,3 +63,5 @@ export const Form: React.FC = () => {
     </form>
   )
 }
+
+export default Form

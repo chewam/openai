@@ -16,9 +16,12 @@ export default async function handler(
 
   console.log({ namespace, componentsList, prompt })
 
-  const result = await openAI(prompt)
-
-  console.log({ result })
-
-  res.status(200).json({ result })
+  try {
+    const result = await openAI(prompt)
+    // console.log({ result })
+    res.status(200).json({ result })
+  } catch (error) {
+    res.status(500).json({ error })
+    throw error
+  }
 }

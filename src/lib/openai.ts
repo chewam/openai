@@ -7,6 +7,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 export default async function useOpenAI(prompt: string) {
+  // throw new Error("---> RANDOM SERVER ERROR")
+
   try {
     const completion = await openai.createCompletion({
       top_p: 1,
