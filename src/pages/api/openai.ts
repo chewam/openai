@@ -6,22 +6,19 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { namespace, components } = req.query
+  const { body } = req
 
-  const componentsList = Array.isArray(components)
-    ? components?.join(", ")
-    : components || ""
+  const prompt = Array.isArray(body.prompt) ? body.prompt[0] : body.prompt || ""
 
-  const prompt = `Create a simple calculator with user input`
-
-  console.log({ namespace, componentsList, prompt })
-
-  try {
-    const result = await openAI(prompt)
-    // console.log({ result })
-    res.status(200).json({ result })
-  } catch (error) {
-    res.status(500).json({ error })
-    throw error
+  if (prompt.length) {
+    try {
+      const result = await openAI(prompt)
+      res.status(200).json({ result })
+    } catch (error) {
+      res.status(500).json({ error })
+      throw error
+    }
+  } else {
+    res.status(422).json({})
   }
 }

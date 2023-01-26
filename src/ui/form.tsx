@@ -1,19 +1,14 @@
 "use client"
 
-import React, { useContext, useState } from "react"
+import React, { useContext } from "react"
 import { useForm } from "react-hook-form"
 
 import { FormDataContext } from "@/app/form-data-context"
-import Spinner from "./spinner"
 
-type FormData = {
-  namespace: string
-  components: string
-}
+type FormData = { prompt: string }
 
 const Form = () => {
-  const { setFormData } = useContext(FormDataContext)
-  const [loading, setLoading] = useState<boolean>(false)
+  const { formData, setFormData } = useContext(FormDataContext)
   const { register, handleSubmit } = useForm<FormData>()
 
   async function getOpenAIResponse(data: FormData) {
@@ -31,33 +26,27 @@ const Form = () => {
   }
 
   const onSubmit = async (data: FormData) => {
-    setLoading(true)
     setFormData({ status: "loading" })
     try {
       const { result } = await getOpenAIResponse(data)
-      console.log("RESULT", result)
       setFormData({ message: result })
-      setLoading(false)
     } catch (error) {
-      console.log("WE GOT IT BRO!", error)
       setFormData({ status: "error" })
     }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="fields">
-        <label>
-          Namespace:
-          <input {...register("namespace")} placeholder="my-namespace" />
-        </label>
-        <label>
-          Components:
-          <input {...register("components")} placeholder="my-components" />
-        </label>
-      </div>
-      <button type="submit">
-        {loading && <Spinner size="sm" />}
+      <label>
+        Message:
+        <textarea
+          rows={3}
+          {...register("prompt")}
+          placeholder="Write instructions here..."
+          value={`# Create a Python dictionary of 6 countries and their capitals\ncountries = `}
+        />
+      </label>
+      <button type="submit" disabled={formData.status === "loading"}>
         Submit
       </button>
     </form>
