@@ -100,11 +100,14 @@
     text-sm
     relative
     shadow-lg
-    font-code
     overflow-auto
     whitespace-pre-wrap
     bg-slate-800/70
     text-neutral-200
     ;
+  }
+
+  .message pre {
+    @apply !bg-transparent;
   }
 }

@@ -1,6 +1,8 @@
 "use client"
 
-import React, { useContext } from "react"
+import { useContext } from "react"
+import SyntaxHighlighter from "react-syntax-highlighter"
+import { tomorrowNight } from "react-syntax-highlighter/dist/esm/styles/hljs"
 
 import Spinner from "./spinner"
 import { FormDataContext } from "@/app/form-data-context"
@@ -21,11 +23,13 @@ const Error = () => (
 const Message = () => {
   const { formData } = useContext(FormDataContext)
   return (
-    <pre className="message">
+    <div className="message">
       {formData.status === "loading" && <LoadingMask />}
       {formData.status === "error" && <Error />}
-      {formData.message}
-    </pre>
+      <SyntaxHighlighter language="javascript" style={tomorrowNight}>
+        {formData.message || ""}
+      </SyntaxHighlighter>
+    </div>
   )
 }
 

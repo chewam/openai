@@ -1,15 +1,19 @@
 "use client"
 
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { FormDataContext } from "@/app/form-data-context"
 
 type FormData = { prompt: string }
 
+const defaultPrompt =
+  "# Create a Python dictionary of 6 countries and their capitals\ncountries = "
+
 const Form = () => {
-  const { formData, setFormData } = useContext(FormDataContext)
   const { register, handleSubmit } = useForm<FormData>()
+  const [prompt, setPrompt] = useState<string>(defaultPrompt)
+  const { formData, setFormData } = useContext(FormDataContext)
 
   async function getOpenAIResponse(data: FormData) {
     const response = await fetch("/api/openai", {
@@ -41,9 +45,10 @@ const Form = () => {
         Message:
         <textarea
           rows={3}
+          value={prompt}
           {...register("prompt")}
           placeholder="Write instructions here..."
-          value={`# Create a Python dictionary of 6 countries and their capitals\ncountries = `}
+          onChange={({ target: { value } }) => setPrompt(value)}
         />
       </label>
       <button type="submit" disabled={formData.status === "loading"}>
