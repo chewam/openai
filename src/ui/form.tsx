@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { FormDataContext } from "@/app/form-data-context"
+import Timer from "./timer"
 
 type FormData = { prompt: string }
 
@@ -51,9 +52,12 @@ const Form = () => {
           onChange={({ target: { value } }) => setPrompt(value)}
         />
       </label>
-      <button type="submit" disabled={formData.status === "loading"}>
-        Submit
-      </button>
+      <div className="flex items-center">
+        <button type="submit" disabled={formData.status === "loading"}>
+          Submit
+        </button>
+        <Timer />
+      </div>
     </form>
   )
 }

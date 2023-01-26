@@ -12,7 +12,7 @@ export default async function useOpenAI(prompt: string) {
       prompt,
       top_p: 1.0,
       temperature: 0,
-      max_tokens: 512,
+      max_tokens: 256,
       presence_penalty: 0,
       frequency_penalty: 0,
       model: "code-davinci-002",

@@ -4,18 +4,23 @@
 
 @layer base {
   body {
-    @apply bg-gradient-to-br from-sky-400 to-pink-200 text-base;
+    /* @apply bg-gradient-to-br from-sky-400 to-pink-200 text-base bg-no-repeat; */
+    @apply flex flex-col from-sky-400 to-pink-200 text-base bg-no-repeat gap-y-6 py-6;
+
+    background-size: 50rem 35rem, auto;
+    background-position: calc(100vw - 30rem) calc(100vh - 30rem), 0 0;
+    background-image: url(/clouds.png), linear-gradient(to bottom right, var(--tw-gradient-stops));
   }
   
   main {
-    @apply container mx-auto flex flex-col gap-12 p-12;
+    @apply container mx-auto flex flex-col gap-y-12 px-12;
   
-    min-height: calc(100vh - 0rem);
-    max-height: calc(100vh - 0rem);
+    min-height: calc(100vh - 10rem);
+    max-height: calc(100vh - 10rem);
   }
   
   h1 {
-    @apply text-sky-800 text-xl;
+    @apply container mx-auto px-12 text-xl text-sky-700;
   }
   
   button, button[type="submit"] {
@@ -109,5 +114,9 @@
 
   .message pre {
     @apply !bg-transparent;
+  }
+
+  .timer {
+    @apply ml-3 text-sm font-semibold text-pink-400;
   }
 }

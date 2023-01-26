@@ -1,3 +1,4 @@
+import Footer from "@/ui/footer"
 import localFont from "@next/font/local"
 
 import "./globals.css"
@@ -39,7 +40,11 @@ const sourceCode = localFont({
 const Layout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en" className={`${sourceSans.variable} ${sourceCode.variable}`}>
     <head />
-    <body>{children}</body>
+    <body>
+      <h1>Open AI - Test App</h1>
+      {children}
+      <Footer />
+    </body>
   </html>
 )
 
