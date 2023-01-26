@@ -64,6 +64,14 @@
   label {
     @apply flex flex-col flex-1 gap-1 text-pink-500;
   }
+
+  a[href] {
+     @apply text-pink-500;
+  }
+
+  a[href]:hover {
+    @apply underline;
+ }
 }
 
 @layer components {
