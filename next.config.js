@@ -12,7 +12,10 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  env: { APP_VERSION: version },
+  env: {
+    APP_VERSION: version,
+  },
+  productionBrowserSourceMaps: true,
   async headers() {
     return [
       {
