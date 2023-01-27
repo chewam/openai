@@ -1,0 +1,58 @@
+name: Quality
+
+on:
+  push:
+    branches: [main, alpha, beta, next]
+  pull_request:
+
+concurrency:
+  cancel-in-progress: true
+  group: tests-${{ github.ref }}
+
+jobs:
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --perfer-offline
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
+
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-18.04
+    needs: [tests]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+      - name: Download coverage
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
+          path: ./coverage/
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
