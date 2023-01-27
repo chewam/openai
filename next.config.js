@@ -6,7 +6,7 @@ const stylesHashes = [
 ].join(" ")
 
 const ContentSecurityPolicy = `
-  script-src 'self' 'strict-dynamic' 'unsafe-inline' https:;
+  script-src 'self' 'unsafe-inline' https:;
   object-src 'none';
   base-uri 'none';
   font-src 'self';
