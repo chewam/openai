@@ -27,7 +27,7 @@ jobs:
         run: yarn --frozen-lockfile --perfer-offline
 
       - name: Run tests
-        run: yarn test
+        run: yarn test:ci
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
