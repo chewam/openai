@@ -1,6 +1,6 @@
 "use client"
 
-import React, { createContext, useState } from "react"
+import { createContext, useMemo, useState } from "react"
 
 type FormDataContext = {
   formData: {
@@ -25,8 +25,13 @@ export const FormDataContextProvider = ({
 }) => {
   const [formData, setFormData] = useState({})
 
+  const value = useMemo(
+    () => ({ formData, setFormData }),
+    [formData, setFormData]
+  )
+
   return (
-    <FormDataContext.Provider value={{ formData, setFormData }}>
+    <FormDataContext.Provider value={value}>
       {children}
     </FormDataContext.Provider>
   )
