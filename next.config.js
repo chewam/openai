@@ -6,11 +6,10 @@ const stylesHashes = [
 ].join(" ")
 
 const ContentSecurityPolicy = `
-  font-src 'self';
-  base-uri 'none';
+  script-src 'self' 'strict-dynamic' 'unsafe-inline' https:;
   object-src 'none';
-  default-src 'self';
-  script-src 'self' 'unsafe-inline';
+  base-uri 'none';
+  font-src 'self';
   style-src 'self' ${stylesHashes} 'unsafe-hashes';
 `
 
