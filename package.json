@@ -2,6 +2,8 @@
   "name": "open-ai",
   "version": "0.1.0",
   "private": true,
+  "author": "Chewam",
+  "license": "MIT",
   "repository": {
     "url": "https://github.com/chewam/openai"
   },
