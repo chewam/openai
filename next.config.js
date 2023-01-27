@@ -2,8 +2,8 @@ const { version } = require("./package.json")
 
 const securityHeaders = [
   {
-    key: "X-XSS-Protection",
     value: "1; mode=block",
+    key: "X-XSS-Protection",
   },
 ]
 

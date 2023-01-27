@@ -2,7 +2,7 @@
 
 import { useContext } from "react"
 import SyntaxHighlighter from "react-syntax-highlighter"
-import { tomorrowNight } from "react-syntax-highlighter/dist/esm/styles/hljs"
+import { tomorrowNight } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 
 import Spinner from "./spinner"
 import { FormDataContext } from "@/app/form-data-context"
