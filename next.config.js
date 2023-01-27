@@ -13,6 +13,14 @@ const nextConfig = {
     appDir: true,
   },
   env: { APP_VERSION: version },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
