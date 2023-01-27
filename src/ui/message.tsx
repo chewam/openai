@@ -26,7 +26,11 @@ const Message = () => {
     <div className="message">
       {formData.status === "loading" && <LoadingMask />}
       {formData.status === "error" && <Error />}
-      <SyntaxHighlighter language="javascript" style={tomorrowNight}>
+      <SyntaxHighlighter
+        wrapLongLines={true}
+        language="javascript"
+        style={tomorrowNight}
+      >
         {formData.message || ""}
       </SyntaxHighlighter>
     </div>
