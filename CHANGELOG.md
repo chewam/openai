@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/chewam/openai/compare/v1.0.0...v1.0.1) (2023-01-27)
+
+
+### Bug Fixes
+
+* wrap message lines ([65f9aca](https://github.com/chewam/openai/commit/65f9aca134656008f16a1072d3389456d9ab756c))
+
 # 1.0.0 (2023-01-27)
 
 
