@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/chewam/openai/compare/v1.0.1...v1.0.2) (2023-01-28)
+
+
+### Bug Fixes
+
+* responsive styles ([9ec9760](https://github.com/chewam/openai/commit/9ec9760693c7f9c16902c704e6de6a9d9a25a3d1))
+
 ## [1.0.1](https://github.com/chewam/openai/compare/v1.0.0...v1.0.1) (2023-01-27)
 
 
