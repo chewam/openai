@@ -1,29 +1,5 @@
 const { version } = require("./package.json")
 
-const stylesHashes = [
-  "'sha256-nV/9MCvxRKsBwS6o3BVMzpGfnO4kb9yRBMAf2CEulIs='",
-  "'sha256-CSr5A7IS9dRw3Uo7TFEY+Os1KKjUjndCqZWzkW4uTaY='",
-].join(" ")
-
-const ContentSecurityPolicy = `
-  script-src 'self' 'unsafe-inline' https:;
-  object-src 'none';
-  base-uri 'none';
-  font-src 'self';
-  style-src 'self' ${stylesHashes} 'unsafe-hashes';
-`
-
-const securityHeaders = [
-  {
-    value: "1; mode=block",
-    key: "X-XSS-Protection",
-  },
-  {
-    key: "Content-Security-Policy",
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
-  },
-]
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
@@ -33,14 +9,6 @@ const nextConfig = {
     APP_VERSION: version,
   },
   productionBrowserSourceMaps: true,
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: securityHeaders,
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig

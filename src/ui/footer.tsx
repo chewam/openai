@@ -1,5 +1,3 @@
-const Spacer = () => <span className="spacer">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-
 const Footer = () => {
   const version = process.env.APP_VERSION || "0.0.0"
   const sha = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "dev"

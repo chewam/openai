@@ -6,7 +6,7 @@ const format = (count: number) => {
   dt.setMilliseconds(count * 100)
   const seconds = dt.getSeconds()
   const milliseconds = dt.getMilliseconds() / 100
-  return `${seconds.toString().padStart(2, "0")},${milliseconds
+  return `${seconds.toString().padStart(2, "0")}.${milliseconds
     .toString()
     .padStart(1, "0")}s`
 }
