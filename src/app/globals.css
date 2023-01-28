@@ -11,6 +11,7 @@
     flex-col
     text-base
     bg-no-repeat
+    sm
     to-pink-200
     from-sky-400
     ;
@@ -21,7 +22,16 @@
   }
   
   main {
-    @apply container mx-auto flex flex-col gap-y-12 px-12;
+    @apply
+    flex
+    px-6
+    gap-y-6
+    mx-auto
+    flex-col
+    container
+    sm:px-12
+    sm:gap-y-12
+    ;
   
     min-height: calc(100vh - 10rem);
     max-height: calc(100vh - 10rem);
@@ -35,8 +45,9 @@
     @apply
     px-3
     py-1
-    w-36
+    w-28
     flex
+    text-sm
     rounded
     relative
     items-center
@@ -51,6 +62,8 @@
     active:bg-pink-300
     disabled:bg-pink-300
     disabled:text-pink-200
+    sm:w-36
+    sm:text-base
     ;
   }
   
@@ -58,6 +71,7 @@
     @apply
     px-2
     py-1
+    text-sm
     rounded
     border-none
     focus:ring-2
@@ -66,11 +80,12 @@
     bg-stone-100
     text-gray-800
     focus:ring-pink-500
+    sm:text-base
     ;
   }
 
   label {
-    @apply flex flex-col flex-1 gap-1 text-pink-500;
+    @apply flex flex-col flex-1 gap-1 text-pink-500 text-sm sm:text-base;
   }
 
   a[href] {
