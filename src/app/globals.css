@@ -38,7 +38,7 @@
   }
   
   h1 {
-    @apply container mx-auto px-12 text-xl text-sky-700;
+    @apply container mx-auto px-12 text-xl text-sky-600;
   }
   
   button, button[type="submit"] {
@@ -52,6 +52,7 @@
     relative
     items-center
     justify-center
+    transition-all
     focus:shadow-lg
     active:enabled:shadow
     hover:enabled:shadow-lg
@@ -128,19 +129,37 @@
     @apply fill-stone-100 text-slate-400;
   }
 
+  .messages {
+    @apply
+      flex
+      flex-col
+      flex-1
+      gap-4
+      p-1
+      ;
+      /* bg-pink-50 */
+  }
+
   .message {
     @apply
-    p-12
+    p-3
     flex-1
     rounded
-    text-sm
     relative
     shadow-lg
     overflow-auto
+    bg-slate-50
     whitespace-pre-wrap
-    bg-slate-800/70
-    text-neutral-200
+    text-neutral-500
     ;
+  }
+
+  .message.user {
+    @apply mr-48 bg-blue-100;
+  }
+
+  .message.assistant {
+    @apply ml-48 bg-green-100;
   }
 
   .message pre {

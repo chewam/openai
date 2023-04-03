@@ -1,5 +1,6 @@
-import { FormDataContext } from "@/app/form-data-context"
 import { useContext, useEffect, useRef, useState } from "react"
+
+import { ChatContext } from "@/app/chat-context"
 
 const format = (count: number) => {
   const dt = new Date(0)
@@ -15,9 +16,7 @@ const Timer = () => {
   const [count, setCount] = useState(0)
   const interval = useRef<NodeJS.Timeout | null>(null)
   const countRef = useRef(count)
-  const {
-    formData: { status },
-  } = useContext(FormDataContext)
+  const { status } = useContext(ChatContext)
 
   useEffect(() => {
     if (status === "loading" && !interval.current) {

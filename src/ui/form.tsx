@@ -3,40 +3,56 @@
 import React, { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 
-import { FormDataContext } from "@/app/form-data-context"
+import { ChatContext, type Message } from "@/app/chat-context"
 import Timer from "./timer"
+import type { ChatCompletionRequestMessage } from "openai"
 
 type FormData = { prompt: string }
 
-const defaultPrompt =
-  "# Create a Python dictionary of 6 countries and their capitals\ncountries = "
+async function getOpenAIResponse(messages: ChatCompletionRequestMessage[]) {
+  const response = await fetch("/api/openai", {
+    method: "POST",
+    body: JSON.stringify(messages),
+    headers: { "Content-Type": "application/json" },
+  })
+
+  if (response?.ok) {
+    return response.json()
+  } else {
+    throw response?.statusText
+  }
+}
 
 const Form = () => {
+  const [prompt, setPrompt] = useState<string>("")
   const { register, handleSubmit } = useForm<FormData>()
-  const [prompt, setPrompt] = useState<string>(defaultPrompt)
-  const { formData, setFormData } = useContext(FormDataContext)
-
-  async function getOpenAIResponse(data: FormData) {
-    const response = await fetch("/api/openai", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    })
-
-    if (response?.ok) {
-      return response.json()
-    } else {
-      throw response?.statusText
-    }
-  }
+  const { messages, setMessages } = useContext(ChatContext)
 
   const onSubmit = async (data: FormData) => {
-    setFormData({ status: "loading" })
+    const message = {
+      data: {
+        role: "user",
+        content: data.prompt,
+      },
+      metadata: { creationDate: new Date() },
+    } as Message
+
+    const allMessages = [...messages, message]
+
+    setMessages(allMessages)
+    setPrompt("")
+
     try {
-      const { result } = await getOpenAIResponse(data)
-      setFormData({ message: result })
+      const trimMessages = allMessages.map(({ data }) => data)
+      const { result } = await getOpenAIResponse(trimMessages)
+      const botMessage = {
+        data: result,
+        metadata: { creationDate: new Date() },
+      } as Message
+
+      setMessages([...allMessages, botMessage])
     } catch (error) {
-      setFormData({ status: "error" })
+      console.log(error)
     }
   }
 
@@ -53,9 +69,7 @@ const Form = () => {
         />
       </label>
       <div className="flex items-center">
-        <button type="submit" disabled={formData.status === "loading"}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
         <Timer />
       </div>
     </form>
