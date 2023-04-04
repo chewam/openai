@@ -41,7 +41,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en" className={`${sourceSans.variable} ${sourceCode.variable}`}>
     <head />
     <body>
-      <h1>Open AI - Test App</h1>
       {children}
       <Footer />
     </body>

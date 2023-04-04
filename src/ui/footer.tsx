@@ -3,7 +3,7 @@ const Footer = () => {
   const sha = process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "dev"
 
   return (
-    <footer className="container mx-auto px-12 flex justify-between text-sm text-sky-700">
+    <footer>
       <div>Chewam © 2023</div>
 
       <div>

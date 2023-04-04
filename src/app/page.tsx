@@ -1,13 +1,13 @@
 import Form from "@/ui/form"
 import Messages from "@/ui/messages"
-import { ChatContextProvider } from "./chat-context"
+import { ChatProvider } from "./use-chat"
 
 const Page = () => (
   <main>
-    <ChatContextProvider>
+    <ChatProvider>
       <Messages />
       <Form />
-    </ChatContextProvider>
+    </ChatProvider>
   </main>
 )
 

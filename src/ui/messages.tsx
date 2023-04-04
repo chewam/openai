@@ -1,11 +1,26 @@
 "use client"
 
-import { ChatContext } from "@/app/chat-context"
-import { useContext } from "react"
+import React, { useRef, useEffect } from "react"
+
 import Message from "./message"
+import { useChat } from "@/app/use-chat"
+import LoadingMessage from "./loading-message"
+
+const SCROLL_DELAY = 300
 
 const Messages = () => {
-  const { messages } = useContext(ChatContext)
+  const { messages, status } = useChat()
+  const messagesEndRef = useRef<HTMLLIElement | null>(null)
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, SCROLL_DELAY)
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
   return (
     <ul className="messages">
@@ -14,6 +29,12 @@ const Messages = () => {
           <Message message={message} />
         </li>
       ))}
+      {status === "loading" && (
+        <li>
+          <LoadingMessage />
+        </li>
+      )}
+      <li ref={messagesEndRef}></li>
     </ul>
   )
 }

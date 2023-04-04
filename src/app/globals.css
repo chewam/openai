@@ -3,17 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply flex flex-col h-full overflow-hidden;
+  }
+
   body {
     @apply
+    sm
     flex
-    py-6
-    gap-y-6
+    flex-1
+    gap-y-3
     flex-col
     text-base
     bg-no-repeat
-    sm
     to-pink-200
     from-sky-400
+    overflow-hidden
     ;
 
     background-size: 50rem 35rem, auto;
@@ -24,17 +29,10 @@
   main {
     @apply
     flex
-    px-6
-    gap-y-6
-    mx-auto
+    flex-1
     flex-col
-    container
-    sm:px-12
-    sm:gap-y-12
+    overflow-auto
     ;
-  
-    min-height: calc(100vh - 10rem);
-    max-height: calc(100vh - 10rem);
   }
   
   h1 {
@@ -74,14 +72,15 @@
     py-1
     text-sm
     rounded
+    resize-none
     border-none
     focus:ring-2
     focus:border-none
     focus:outline-none
+    sm:text-base
     bg-stone-100
     text-gray-800
     focus:ring-pink-500
-    sm:text-base
     ;
   }
 
@@ -99,8 +98,41 @@
 }
 
 @layer components {
+  .form-container {
+    @apply
+    left-0
+    right-0
+    bottom-0
+    absolute
+    to-white
+    bg-no-repeat
+    from-transparent
+    ;
+
+    background-size: auto;
+    background-position: 0 0;
+    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+  }
+
   form {
-    @apply rounded shadow-lg flex flex-col gap-6 p-6 bg-pink-200;
+    @apply
+    p-6
+    z-10
+    flex
+    mt-5
+    mb-10
+    gap-6
+    rounded
+    mx-auto
+    relative
+    container
+    shadow-lg
+    bg-pink-200
+    ;
+  }
+
+  form textarea {
+    @apply flex-1;
   }
 
   .spinner {
@@ -131,22 +163,27 @@
 
   .messages {
     @apply
-      flex
-      flex-col
-      flex-1
-      gap-4
-      p-1
-      ;
-      /* bg-pink-50 */
+    flex
+    px-6
+    pt-6
+    gap-6
+    pb-24
+    mb-12
+    flex-1
+    mx-auto
+    flex-col
+    container
+    ;
   }
 
   .message {
     @apply
-    p-3
+    px-3
+    py-2
     flex-1
     rounded
     relative
-    shadow-lg
+    shadow
     overflow-auto
     bg-slate-50
     whitespace-pre-wrap
@@ -162,11 +199,29 @@
     @apply ml-48 bg-green-100;
   }
 
+  .message .info {
+    @apply flex justify-between text-sm text-neutral-400;
+  }
+
   .message pre {
     @apply !bg-transparent;
   }
 
   .timer {
     @apply ml-3 text-sm font-semibold text-pink-400;
+  }
+
+  footer {
+    @apply
+    px-2
+    flex
+    mb-2
+    mx-auto
+    text-sm
+    relative
+    container
+    text-sky-400
+    justify-between
+    ;
   }
 }

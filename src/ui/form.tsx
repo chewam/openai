@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useContext, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-
-import { ChatContext, type Message } from "@/app/chat-context"
-import Timer from "./timer"
 import type { ChatCompletionRequestMessage } from "openai"
+import ReactTextareaAutosize from "react-textarea-autosize"
+
+import { useChat, type Message } from "@/app/use-chat"
 
 type FormData = { prompt: string }
 
@@ -23,56 +23,72 @@ async function getOpenAIResponse(messages: ChatCompletionRequestMessage[]) {
   }
 }
 
+async function tokenizePrompt(prompt: string) {
+  const response = await fetch("/api/tokenize", {
+    method: "POST",
+    body: prompt,
+  })
+
+  if (response?.ok) {
+    return response.json()
+  } else {
+    throw response?.statusText
+  }
+}
+
+const createMessage = async (prompt: string): Promise<Message> => {
+  const tokenizedPrompt = await tokenizePrompt(prompt)
+
+  return {
+    data: { role: "user", content: prompt },
+    metadata: { creationDate: new Date(), tokens: tokenizedPrompt.length },
+  }
+}
+
 const Form = () => {
   const [prompt, setPrompt] = useState<string>("")
   const { register, handleSubmit } = useForm<FormData>()
-  const { messages, setMessages } = useContext(ChatContext)
+  const { messages, addMessage, setStatus } = useChat()
 
   const onSubmit = async (data: FormData) => {
-    const message = {
-      data: {
-        role: "user",
-        content: data.prompt,
-      },
-      metadata: { creationDate: new Date() },
-    } as Message
+    const message = await createMessage(prompt)
 
-    const allMessages = [...messages, message]
-
-    setMessages(allMessages)
+    addMessage(message)
+    setStatus("loading")
     setPrompt("")
 
     try {
-      const trimMessages = allMessages.map(({ data }) => data)
+      const trimMessages = [...messages, message].map(({ data }) => data)
       const { result } = await getOpenAIResponse(trimMessages)
       const botMessage = {
         data: result,
         metadata: { creationDate: new Date() },
       } as Message
 
-      setMessages([...allMessages, botMessage])
+      addMessage(botMessage)
+      setStatus("ready")
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Message:
-        <textarea
-          rows={3}
+    <div className="form-container">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <ReactTextareaAutosize
+          rows={1}
+          autoFocus
+          minRows={1}
+          maxRows={8}
           value={prompt}
+          cacheMeasurements
           {...register("prompt")}
-          placeholder="Write instructions here..."
+          placeholder="Send a message..."
           onChange={({ target: { value } }) => setPrompt(value)}
         />
-      </label>
-      <div className="flex items-center">
         <button type="submit">Submit</button>
-        <Timer />
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 

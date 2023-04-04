@@ -1,6 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
-import { ChatContext } from "@/app/chat-context"
+import { useChat } from "@/app/use-chat"
+
+const COUNT_INTERVAL = 100
 
 const format = (count: number) => {
   const dt = new Date(0)
@@ -12,23 +14,24 @@ const format = (count: number) => {
     .padStart(1, "0")}s`
 }
 
-const Timer = () => {
+const Timer = ({ onStop }: { onStop?: (time: number) => void }) => {
   const [count, setCount] = useState(0)
   const interval = useRef<NodeJS.Timeout | null>(null)
   const countRef = useRef(count)
-  const { status } = useContext(ChatContext)
+  const { status } = useChat()
 
   useEffect(() => {
     if (status === "loading" && !interval.current) {
       countRef.current = 0
       interval.current = setInterval(() => {
         setCount(++countRef.current)
-      }, 100)
+      }, COUNT_INTERVAL)
     } else if (status !== "loading" && interval.current) {
       clearInterval(interval.current)
       interval.current = null
+      if (onStop) onStop(countRef.current)
     }
-  }, [status])
+  }, [status, onStop])
 
   return <div className="timer">{count ? format(count) : null}</div>
 }
