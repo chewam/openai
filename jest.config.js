@@ -21,6 +21,8 @@ const customJestConfig = {
 
   moduleNameMapper: {
     "@/(.*)$": "<rootDir>/src/$1",
+    "react-markdown":
+      "<rootDir>/node_modules/react-markdown/react-markdown.min.js",
   },
   testEnvironment: "jest-environment-jsdom",
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { format } from "date-fns"
-import remarkGfm from "remark-gfm"
+// import remarkGfm from "remark-gfm"
 import ReactMarkdown from "react-markdown"
 import SyntaxHighlighter, {
   type SyntaxHighlighterProps,
@@ -25,7 +25,7 @@ const Message = ({
     <div className={`message ${role}`}>
       <div className="markdown-body">
         <ReactMarkdown
-          remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
+          // remarkPlugins={[[remarkGfm, { singleTilde: false }]]}
           components={{
             code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "")
