@@ -43,8 +43,8 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     const storedMessages = localStorage.getItem("messages")
     if (storedMessages) {
       setMessages(JSON.parse(storedMessages))
-      setInitialized(true)
     }
+    setInitialized(true)
   }, [])
 
   useEffect(() => {

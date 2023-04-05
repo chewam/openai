@@ -2,6 +2,7 @@ import Footer from "@/ui/footer"
 import localFont from "@next/font/local"
 
 import "./globals.css"
+import "../../node_modules/github-markdown-css/github-markdown-light.css"
 
 const sourceSans = localFont({
   preload: true,
