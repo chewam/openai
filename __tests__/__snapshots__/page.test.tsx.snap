@@ -3,42 +3,24 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <main>
-    <form>
-      <label>
-        Message:
-        <textarea
-          name="prompt"
-          placeholder="Write instructions here..."
-          rows="3"
-        >
-          # Create a Python dictionary of 6 countries and their capitals
-countries = 
+    <ul
+      class="messages"
+    >
+      <li />
+    </ul>
+    <div
+      class="form-container"
+    >
+      <form>
+        <textarea>
+          test
         </textarea>
-      </label>
-      <div
-        class="flex items-center"
-      >
         <button
           type="submit"
         >
           Submit
         </button>
-        <div
-          class="timer"
-        />
-      </div>
-    </form>
-    <div
-      class="message"
-    >
-      <pre
-        style="display: block; overflow-x: auto; background: rgb(29, 31, 33); color: rgb(197, 200, 198); padding: 0.5em;"
-      >
-        <code
-          class="language-javascript"
-          style="white-space: pre-wrap;"
-        />
-      </pre>
+      </form>
     </div>
   </main>
 </div>

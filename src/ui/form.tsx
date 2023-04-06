@@ -1,64 +1,94 @@
 "use client"
 
-import React, { useContext, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
+import type { ChatCompletionRequestMessage } from "openai"
+import ReactTextareaAutosize from "react-textarea-autosize"
 
-import { FormDataContext } from "@/app/form-data-context"
-import Timer from "./timer"
+import { useChat, type Message } from "@/app/use-chat"
 
 type FormData = { prompt: string }
 
-const defaultPrompt =
-  "# Create a Python dictionary of 6 countries and their capitals\ncountries = "
+async function getOpenAIResponse(messages: ChatCompletionRequestMessage[]) {
+  const response = await fetch("/api/openai", {
+    method: "POST",
+    body: JSON.stringify(messages),
+    headers: { "Content-Type": "application/json" },
+  })
+
+  if (response?.ok) {
+    return response.json()
+  } else {
+    throw response?.statusText
+  }
+}
+
+async function tokenizePrompt(prompt: string) {
+  const response = await fetch("/api/tokenize", {
+    method: "POST",
+    body: prompt,
+  })
+
+  if (response?.ok) {
+    return response.json()
+  } else {
+    throw response?.statusText
+  }
+}
+
+const createMessage = async (prompt: string): Promise<Message> => {
+  const tokenizedPrompt = await tokenizePrompt(prompt)
+
+  return {
+    data: { role: "user", content: prompt },
+    metadata: { creationDate: new Date(), tokens: tokenizedPrompt.length },
+  }
+}
 
 const Form = () => {
+  const [prompt, setPrompt] = useState<string>("")
   const { register, handleSubmit } = useForm<FormData>()
-  const [prompt, setPrompt] = useState<string>(defaultPrompt)
-  const { formData, setFormData } = useContext(FormDataContext)
-
-  async function getOpenAIResponse(data: FormData) {
-    const response = await fetch("/api/openai", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: { "Content-Type": "application/json" },
-    })
-
-    if (response?.ok) {
-      return response.json()
-    } else {
-      throw response?.statusText
-    }
-  }
+  const { messages, addMessage, setStatus } = useChat()
 
   const onSubmit = async (data: FormData) => {
-    setFormData({ status: "loading" })
+    const message = await createMessage(prompt)
+
+    addMessage(message)
+    setStatus("loading")
+    setPrompt("")
+
     try {
-      const { result } = await getOpenAIResponse(data)
-      setFormData({ message: result })
+      const trimMessages = [...messages, message].map(({ data }) => data)
+      const { result } = await getOpenAIResponse(trimMessages)
+      const botMessage = {
+        data: result,
+        metadata: { creationDate: new Date() },
+      } as Message
+
+      addMessage(botMessage)
+      setStatus("ready")
     } catch (error) {
-      setFormData({ status: "error" })
+      console.log(error)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>
-        Message:
-        <textarea
-          rows={3}
+    <div className="form-container">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <ReactTextareaAutosize
+          rows={1}
+          autoFocus
+          minRows={1}
+          maxRows={8}
           value={prompt}
+          cacheMeasurements
           {...register("prompt")}
-          placeholder="Write instructions here..."
+          placeholder="Send a message..."
           onChange={({ target: { value } }) => setPrompt(value)}
         />
-      </label>
-      <div className="flex items-center">
-        <button type="submit" disabled={formData.status === "loading"}>
-          Submit
-        </button>
-        <Timer />
-      </div>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   )
 }
 

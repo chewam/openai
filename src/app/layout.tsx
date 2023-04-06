@@ -2,6 +2,7 @@ import Footer from "@/ui/footer"
 import localFont from "@next/font/local"
 
 import "./globals.css"
+import "../../node_modules/github-markdown-css/github-markdown-light.css"
 
 const sourceSans = localFont({
   preload: true,
@@ -41,7 +42,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en" className={`${sourceSans.variable} ${sourceCode.variable}`}>
     <head />
     <body>
-      <h1>Open AI - Test App</h1>
       {children}
       <Footer />
     </body>

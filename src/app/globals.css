@@ -3,17 +3,22 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply flex flex-col h-full overflow-hidden;
+  }
+
   body {
     @apply
+    sm
     flex
-    py-6
-    gap-y-6
+    flex-1
+    gap-y-3
     flex-col
     text-base
     bg-no-repeat
-    sm
     to-pink-200
     from-sky-400
+    overflow-hidden
     ;
 
     background-size: 50rem 35rem, auto;
@@ -24,21 +29,15 @@
   main {
     @apply
     flex
-    px-6
-    gap-y-6
-    mx-auto
+    flex-1
     flex-col
-    container
-    sm:px-12
-    sm:gap-y-12
+    overflow-auto
+    scroll-smooth
     ;
-  
-    min-height: calc(100vh - 10rem);
-    max-height: calc(100vh - 10rem);
   }
   
   h1 {
-    @apply container mx-auto px-12 text-xl text-sky-700;
+    @apply container mx-auto px-12 text-xl text-sky-600;
   }
   
   button, button[type="submit"] {
@@ -52,6 +51,7 @@
     relative
     items-center
     justify-center
+    transition-all
     focus:shadow-lg
     active:enabled:shadow
     hover:enabled:shadow-lg
@@ -73,14 +73,15 @@
     py-1
     text-sm
     rounded
+    resize-none
     border-none
     focus:ring-2
     focus:border-none
     focus:outline-none
+    sm:text-base
     bg-stone-100
     text-gray-800
     focus:ring-pink-500
-    sm:text-base
     ;
   }
 
@@ -98,8 +99,41 @@
 }
 
 @layer components {
+  .form-container {
+    @apply
+    left-0
+    right-0
+    bottom-0
+    absolute
+    to-white
+    bg-no-repeat
+    from-transparent
+    ;
+
+    background-size: auto;
+    background-position: 0 0;
+    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+  }
+
   form {
-    @apply rounded shadow-lg flex flex-col gap-6 p-6 bg-pink-200;
+    @apply
+    p-6
+    z-10
+    flex
+    mt-5
+    mb-10
+    gap-6
+    rounded
+    mx-auto
+    relative
+    container
+    shadow-lg
+    bg-pink-200
+    ;
+  }
+
+  form textarea {
+    @apply flex-1;
   }
 
   .spinner {
@@ -128,19 +162,44 @@
     @apply fill-stone-100 text-slate-400;
   }
 
+  .messages {
+    @apply
+    flex
+    px-6
+    pt-6
+    gap-6
+    pb-12
+    mb-12
+    flex-1
+    mx-auto
+    flex-col
+    container
+    ;
+  }
+
   .message {
     @apply
-    p-12
+    px-6
+    py-4
     flex-1
     rounded
-    text-sm
     relative
-    shadow-lg
-    overflow-auto
-    whitespace-pre-wrap
-    bg-slate-800/70
-    text-neutral-200
+    shadow
+    bg-slate-50
+    text-neutral-500
     ;
+  }
+
+  .message.user {
+    @apply mr-48 bg-blue-100;
+  }
+
+  .message.assistant {
+    @apply ml-48 bg-green-100;
+  }
+
+  .message .info {
+    @apply flex justify-between text-sm text-neutral-400 mt-2;
   }
 
   .message pre {
@@ -149,5 +208,27 @@
 
   .timer {
     @apply ml-3 text-sm font-semibold text-pink-400;
+  }
+
+  footer {
+    @apply
+    px-2
+    flex
+    mb-2
+    mx-auto
+    text-sm
+    relative
+    container
+    text-sky-400
+    justify-between
+    ;
+  }
+
+  .markdown-body {
+    background-color: transparent !important;
+  }
+
+  .markdown-body pre > div {
+    padding: 12px 16px !important;
   }
 }
