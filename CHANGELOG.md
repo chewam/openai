@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/chewam/openai/compare/v1.0.2...v1.1.0) (2023-04-06)
+
+
+### Features
+
+* chat mode ([#27](https://github.com/chewam/openai/issues/27)) ([04f984a](https://github.com/chewam/openai/commit/04f984a5bc986bc5c61b6685feff6d1e8e737778))
+
 ## [1.0.2](https://github.com/chewam/openai/compare/v1.0.1...v1.0.2) (2023-01-28)
 
 
