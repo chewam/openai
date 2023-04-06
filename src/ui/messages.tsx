@@ -1,5 +1,6 @@
 "use client"
 
+import { v4 as uuidv4 } from "uuid"
 import React, { useRef, useEffect } from "react"
 
 import Message from "./message"
@@ -25,7 +26,7 @@ const Messages = () => {
   return (
     <ul className="messages">
       {messages.map((message, i) => (
-        <li key={i}>
+        <li key={uuidv4()}>
           <Message message={message} />
         </li>
       ))}
