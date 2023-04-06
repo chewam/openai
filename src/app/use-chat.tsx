@@ -1,6 +1,13 @@
 "use client"
 
-import { createContext, useContext, useEffect, useState } from "react"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 import type { ChatCompletionRequestMessage } from "openai"
 
@@ -35,9 +42,9 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
   const [initialized, setInitialized] = useState<boolean>(false)
   const [status, setStatus] = useState<"ready" | "loading">("ready")
 
-  const addMessage = (message: Message) => {
+  const addMessage = useCallback((message: Message) => {
     setMessages((prevMessages) => [...prevMessages, message])
-  }
+  }, [])
 
   useEffect(() => {
     const storedMessages = localStorage.getItem("messages")
@@ -53,12 +60,15 @@ export const ChatProvider: React.FC<ChatProviderProps> = ({ children }) => {
     }
   }, [messages, initialized])
 
-  const contextValue = {
-    status,
-    messages,
-    addMessage,
-    setStatus,
-  }
+  const contextValue = useMemo(
+    () => ({
+      status,
+      messages,
+      addMessage,
+      setStatus,
+    }),
+    [status, messages, addMessage, setStatus]
+  )
 
   return (
     <ChatContext.Provider value={contextValue}>{children}</ChatContext.Provider>
